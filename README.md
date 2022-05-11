@@ -1,2 +1,3 @@
-# react-opentutorials
-공부용 - 생활코딩 리액트 프로그래밍
+## React Developer Tools
+
+- https://chrome.google.com/webstore/category/extensions?hl=ko
