@@ -1,9 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
 import TOC from './components/TOC';
-import Content from './components/Content'
+import ReadContent from './components/ReadContent'
 import Subject from './components/Subject';
 import react, { Component } from 'react';
+import Control from './components/Control';
+import CreateContent from './components/CreateContent';
 class App extends Component{
 
   //state를 쓰기 위해서 constructorㄹ르 작성
@@ -23,12 +25,22 @@ class App extends Component{
   }
 
   render(){
-
+    let _article=null;
     const mode = this.state.mode==='welcome'?this.state.welcome:this.state.contents[0];;
 
     const {title:_title, desc: _desc} = mode;
-    console.log("_title", _title)
 
+    if(this.state.mode==='welcome'){
+      _article = <ReadContent title={_title} desc={_desc}/>
+    }
+    else if(this.state.mode ==='read'){
+      
+    }
+    else if(this.state.mode ==='create'){
+      console.log("???")
+      _article = <CreateContent/>
+    }
+    console.log("this.state.mode", this.state.mode)
     
     return (
       <div className="App">
@@ -37,20 +49,16 @@ class App extends Component{
           this.setState({mode: 'HTML'})
         }.bind(this)
         }/>
-        {/* <header>
-          <h1><a href="/" onClick={function(e){
-            e.preventDefault();
-
-            // this.state.mode='welcome'
-            this.setState({mode: 'HTML'})
-            console.log(this.state.mode)
-          }.bind(this)}>{this.state.subject.title}</a></h1>
-          <p>{this.state.subject.sub}</p>
-      </header> */}
-
-
         <TOC data={this.state.contents}/>
-        <Content title={_title} desc={_desc}/>
+        <hr/>
+          <Control onChangeMode={function(_mode){
+            this.setState({
+              mode: _mode
+            })
+          }.bind(this)}/>
+        <hr/>
+        {_article}
+        
       </div>
     );
   }
