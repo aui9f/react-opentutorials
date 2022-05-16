@@ -4,6 +4,10 @@ import React, { Component } from "react";
 // import { Component } from "react"; -- react 라이브러리에서 Component 클래스를 로딩
 
 class TOC extends Component{
+    shouldComponentUpdate(newProps, newState){
+        console.log("TOC render shouldComponentUpdate")
+        return this.props.data === newProps.data ? false:true;
+    }
     render(){
         const data = this.props.data;
         
