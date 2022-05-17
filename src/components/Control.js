@@ -9,7 +9,11 @@ class Control extends Component{
                         this.props.onChangeMode('create')
                     }.bind(this)
                 }>create</button></li>
-                <li><button type="button">update</button></li>
+                <li><button type="button" onClick={
+                    function(e){
+                        this.props.onChangeMode('update')
+                    }.bind(this)
+                }>update</button></li>
                 <li><button type="button">delete</button></li>
             </ul>
         )
