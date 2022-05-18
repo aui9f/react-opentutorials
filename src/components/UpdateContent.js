@@ -4,29 +4,43 @@ class UpdateContent extends Component{
     constructor(props){
         super(props);
         this.state = {
+            id: this.props.data.id,
             title: this.props.data.title,
             desc: this.props.data.desc,
         }
     }
     render(){
-        const {id, title, desc}  = this.props.data;
+        
 
         return(
             <article>
                 <h2>Update</h2>
                 <form action="/update_process" method="post" onSubmit={function(e){
-                    e.preventDefault();
+                    e.preventDefault(e);
                     this.props.onSubmit(
-                        e.target.title.value,
-                        e.target.desc.value
+                        this.state.id, this.state.title, this.state.desc
                     )
                 }.bind(this)}>
-                    <input type="text" name="title" value={this.state.title} placeholder="title"/>
+
+                    <input type="hidden" name="id" value={this.state.id}/>
+
+                    <input type="text" name="title" value={this.state.title} placeholder="title"
+                    onChange={function(e){
+                        console.log(e.target.value)
+                        this.setState({title: e.target.value})
+
+                    }.bind(this)}/>
                     <br/>
                     
-                    <textarea name="desc" value={this.state.desc} placeholder="description"/>
+                    <textarea name="desc" value={this.state.desc} 
+                    placeholder="description"
+                    onChange={function(e){
+                        this.setState({desc: e.target.value})
+                    }.bind(this)}
+                    />
                     <br/>
-                    <input type="submit" value="CREATE"></input>
+                    
+                    <input type="submit" value="UPDATE"></input>
                 </form>
             </article>
         )

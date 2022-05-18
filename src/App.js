@@ -15,7 +15,7 @@ class App extends Component{
         this.max_content_id=3;
         this.state = {
             mode: 'welcome',
-            selected_content_id: 2,
+            selected_content_id: 1,
             subject: {title: 'WEB', sub: 'World Wid Web'},
             welcome: {title: 'Welcome', desc: 'Hello, React..'},
             contents: [
@@ -60,9 +60,12 @@ class App extends Component{
                 let _contents = this.state.contents.concat({
                     id: this.max_content_id, title: _title, desc: _desc
                 })
-                // const newData =  {id: this.state.contents[this.state.contents.length-1].id + 1, title:_title, desc: _desc};
+                
+                
                 this.setState({
                     contents: _contents,
+                    mode: 'read',
+                    selected_content_id: this.max_content_id
                 })
             }.bind(this)}
         />
@@ -71,14 +74,15 @@ class App extends Component{
     else if(this.state.mode==='update'){
         const selected = this.state.contents.filter(x=>x.id===this.state.selected_content_id)[0]
         
-      _article = <UpdateContent data={selected} onSubmit={function(_title, _desc){
-          this.max_content_id = this.max_content_id+1;
-          let _contents = this.state.concat({
-              id: this.max_content_id, title: _title, desc: _desc
-          });
-          this.setState({
-              contents:  _contents
-          });
+      _article = <UpdateContent data={selected} onSubmit={function(_id, _title, _desc){
+        const _contents = Array.from(this.state.contents).map(x=>{
+            return x.id===_id ? {id: _id, title: _title, desc: _desc}:x
+        })
+       
+        this.setState({
+          mode: 'read',
+            contents:  _contents
+        });
 
       }.bind(this)}/>
     }
@@ -105,9 +109,26 @@ class App extends Component{
 
         <hr/>
           <Control onChangeMode={function(_mode){
-            this.setState({
-              mode: _mode
-            })
+            console.log("this.state.selected_content_id", this.state.selected_content_id)
+            if(_mode==='delete'){
+              if(window.confirm('really?')){
+                const _contents = Array.from(this.state.contents.filter(x=>{
+                  return x.id !== this.state.selected_content_id
+                }))
+
+                this.setState({
+                  mode: 'welcome',
+                  contents: _contents
+                })
+                
+              }
+             
+            }else{
+              this.setState({
+                mode: _mode,
+              })
+            }
+            
           }.bind(this)}/>
         <hr/>
         {this.getContent()}

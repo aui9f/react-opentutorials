@@ -14,7 +14,10 @@ class Control extends Component{
                         this.props.onChangeMode('update')
                     }.bind(this)
                 }>update</button></li>
-                <li><button type="button">delete</button></li>
+                <li><button type="button" onClick={function(e){
+                    e.preventDefault();
+                    this.props.onChangeMode('delete')
+                }.bind(this)}>delete</button></li>
             </ul>
         )
     }
