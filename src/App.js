@@ -1,14 +1,9 @@
 import React, {useState} from 'react';
 import './App.css'
+import Index from './page/ch04';
 function App(){
   return(
-    <div>
-      <div className="container">
-        <h1>Hello</h1>
-        <FuncCop initNumber={2}></FuncCop>
-        <ClassCop initNumber={2}></ClassCop>
-      </div>
-    </div>
+    <Index/>
   )
 }
 
