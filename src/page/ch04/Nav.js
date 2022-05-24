@@ -2,23 +2,22 @@ import React, {Component} from 'react';
 
 class Nav extends Component{
 
-    state = {
-        list: []
-    }
-    componentDidMount(){
-        fetch('list.json').then(res=>{
-            return res.json();
-        }).then(function(json){
-            this.setState({list:json})
+    // state = {
+    //     list: []
+    // }
+    // componentDidMount(){
+    //     fetch('list.json').then(res=>{
+    //         return res.json();
+    //     }).then(function(json){
+    //         this.setState({list:json})
             
-        }.bind(this))
-        console.log("componentDidMount")
-    }
+    //     }.bind(this))
+    //     console.log("componentDidMount")
+    // }
 
     tagClick = (e) => {
 
         e.preventDefault();
-        console.log(e)
         const {
             target : {
                 dataset
@@ -28,12 +27,14 @@ class Nav extends Component{
         this.props.onClick(dataset.id)
     }
     render(){
-        const listTag = [];
-        this.state.list.forEach(x => {
-            listTag.push(<li key={x.id}>
+        // console.log("this.props.list", this.props.list)
+        const listTag = this.props.list.length>0?
+        this.props.list.map(x => {
+            return <li key={x.id}>
                 <a href={x.id} data-id={x.id} onClick={this.tagClick}>{x.title}</a>
-            </li>)
-        });
+            </li>
+        })
+        :null;
         return (
             <nav>
                 

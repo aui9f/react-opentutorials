@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Article from "./Article";
 import Nav from "./Nav";
 function Index(){
     const [status, setStatus] = useState({title: 'Welcom', desc: 'Hello, React & Ajax'});
 
+    const [list, setList] = useState([]);
     
-        
+    
     const navClick = (id) => {
         
         fetch(`${id}.json`).then(res=>{
@@ -17,11 +18,20 @@ function Index(){
             })
         })
     }
-    
 
+    const test = async () => {
+        const result = await fetch('list.json');
+        // const json = ;
+        setList([...await result.json()]);
+        
+    }
+useEffect(()=>{
+    test();
+}, [])
     return(
         <div>
-            <Nav onClick={navClick}/>
+            
+            <Nav list={list} onClick={navClick}/>
             <Article title={status.title} desc={status.desc}/>
         </div>
     )
