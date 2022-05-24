@@ -14,10 +14,25 @@ class Nav extends Component{
         }.bind(this))
         console.log("componentDidMount")
     }
+
+    tagClick = (e) => {
+
+        e.preventDefault();
+        console.log(e)
+        const {
+            target : {
+                dataset
+            }
+        } = e;
+
+        this.props.onClick(dataset.id)
+    }
     render(){
         const listTag = [];
         this.state.list.forEach(x => {
-            listTag.push(<li key={x.id}><a href={x.id}>{x.title}</a></li>)
+            listTag.push(<li key={x.id}>
+                <a href={x.id} data-id={x.id} onClick={this.tagClick}>{x.title}</a>
+            </li>)
         });
         return (
             <nav>
